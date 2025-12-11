@@ -90,7 +90,7 @@ def run_day(year: int, day: int, run_example: bool, run_input: bool):
     sys.modules[f"day_{day}_solution"] = module
     spec.loader.exec_module(module)
 
-    print(f"aoc: {year} / {day}")
+    print(f"aoc: {year} / {day}\n")
 
     tasks = []
     if run_example:
@@ -98,6 +98,11 @@ def run_day(year: int, day: int, run_example: bool, run_input: bool):
             print(f"aoc: {year} / {day} example file not found: {example_file}")
         else:
             tasks.append(("example", example_file))
+
+        # optional
+        example_file_alt = day_path / "example-alt.txt"
+        if example_file_alt.exists():
+            tasks.append(("example - alt", example_file_alt))
 
     if run_input:
         if not input_file.exists():
@@ -110,7 +115,7 @@ def run_day(year: int, day: int, run_example: bool, run_input: bool):
         if hasattr(module, "solution"):
             res, duration = run_func(module.solution, file_path)
             print(f"result: {res}")
-            print(f"time: {duration:.4f}s")
+            print(f"time: {duration:.4f}s\n")
         else:
             print(f"error: 'solution' function not found in {solution_path}")
 
